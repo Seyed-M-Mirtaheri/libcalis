@@ -50,7 +50,7 @@ and output to DST starting at AOFFSET'''
     if comp(i, j) > 0: dst[dstOffset] = j; bOffset += 1; bSize -= 1
     else:              dst[dstOffset] = i; aOffset += 1; aSize -= 1
     dstOffset += 1
-  if bSize:   copy(src, bOffset, bSize, dst, dstOffset)
+  if   bSize: copy(src, bOffset, bSize, dst, dstOffset)
   elif aSize: copy(src, aOffset, aSize, dst, dstOffset)
 
 def mergesort(src, offset, size, dst, comp, aSize = 1, iterations = 0):
@@ -75,6 +75,7 @@ def main():
   n = 21
   src = range(n); random.shuffle(src); dst = [0 for _ in src]
   sort(src, dst, mergesort, CACHE_SIZE, cmp)
+  print src
   print dst
 
 if __name__ == '__main__': import random; main()

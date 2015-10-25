@@ -23,12 +23,19 @@ const size_t cacheSize = 8;
    the cache space. */
 
 void shuffle(calis_num a[], size_t n)
-/* Randomly shuffle integers from 0 to n-1 and store them in array a. */
-{ int i = 0, j;
-  for ( ; i < n; ++i) a[i] = -1;
-  for (i = 0; i < n; ++i)
-  { do j = rand() % n; while (a[j] >= 0);
-    a[j] = i; } }
+/* Randomly shuffle integers from 0 to n-1 and store them in array a. 
+   Uses Knuth shuffle. */
+{ 
+  int i, j, temp;
+  for (i = 0 ; i < n; ++i) 
+    a[i] = i;
+  for (i = n - 1; i > 1; i--) { 
+    j = (int)((double)i * ( rand() / (RAND_MAX+1.0) ));
+    temp = a[j]; 
+    a[j] = a[i];
+    a[i] = temp;
+  }
+}
 
 void printArray(calis_num a[], size_t n)
 /* Pretty-print an array a of size n. */
@@ -41,6 +48,7 @@ int main(int argc, char **argv)
   calis_num *src = (calis_num *) malloc(size),
             *dst = (calis_num *) malloc(size);
   srand((unsigned int) time(NULL));  /* set random seed */
+  rand(); /* call it once to trigger random seed */
   shuffle(src, n);
   /* below is how you invoke calis_sort */
   calis_sort(
